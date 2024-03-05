@@ -1,19 +1,19 @@
 package edu.escuelaing.ieti.service.user;
 
 import java.util.List;
-import java.util.Optional;
 
 import edu.escuelaing.ieti.repository.user.User;
+import edu.escuelaing.ieti.repository.user.UserDto;
 
 public interface UsersService {
 
-    User save(User user);
+    User save(UserDto userDto);
 
-    Optional<User> findById(String id);
+    User findById(String id);
 
     List<User> all();
 
-    void deleteById(String id);
+    boolean deleteById(String id);
 
-    User update(User user, String userId);
+    User update(UserDto userDto, String userId);
 }

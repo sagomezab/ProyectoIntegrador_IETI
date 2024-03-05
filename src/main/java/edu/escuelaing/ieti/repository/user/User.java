@@ -1,14 +1,20 @@
 package edu.escuelaing.ieti.repository.user;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
+@Document
 public class User {
 
-    private final String id;
-    private final Date createdAt;
+    @Id
+    private String id;
+    private Date createdAt;
     private String name;
     private String lastName;
     private String email;
+    private String password;
 
     public User(String id, String name, String lastName, String email, String password) {
         this.id = id;
@@ -16,14 +22,18 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.createdAt = new Date();
+        this.password = password;
     }
 
     public User(UserDto userDto) {
-        this.id = null;
         this.name = userDto.getName();
         this.lastName = userDto.getLastName();
         this.email = userDto.getEmail();
         this.createdAt = new Date();
+        this.password = userDto.getPassword();
+    }
+
+    public User() {
     }
 
 
@@ -60,10 +70,12 @@ public class User {
     }
 
 
-
     public void update(UserDto userDto) {
         this.name = userDto.getName();
         this.lastName = userDto.getLastName();
         this.email = userDto.getEmail();
+        if (!userDto.getPassword().isEmpty()) {
+            this.password = userDto.getPassword();
+        }
     }
 }

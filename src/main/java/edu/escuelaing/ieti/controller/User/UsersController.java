@@ -15,45 +15,43 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/users/")
+@RequestMapping("/v1/users")
 public class UsersController {
 
-    private final UsersService usersService;
+    private final UsersService userService;
 
-    public UsersController(@Autowired UsersService usersService) {
-        this.usersService = usersService;
-    }
-
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserDto user) {
-        User userCreated = usersService.save(new User(user));
-        URI createdUserUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userCreated.getId()).toUri();
-        return ResponseEntity.created(createdUserUri).body(userCreated);
+    public UsersController(@Autowired UsersService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(usersService.all());
+    public ResponseEntity<List<User>> all()
+    {
+        return ResponseEntity.ok(userService.all());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") String id) {
-        User findUser = usersService.findById(id).orElseThrow(()->new UserNotFoundException(id));
-        return ResponseEntity.ok(findUser);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable String id)
+    {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
-    @PutMapping
-    public ResponseEntity<User> updateUser(@PathVariable("id") String id,@RequestBody UserDto userDto) {
-        User userUpdate = usersService.findById(id).orElseThrow(()->new UserNotFoundException(id));
-        User userUpdated = usersService.update(new User(userDto), id);
-        usersService.save(userUpdate);
-        return ResponseEntity.ok(userUpdated);
+
+    @PostMapping
+    public ResponseEntity<User> create(@RequestBody UserDto userDto)
+    {
+        return ResponseEntity.ok(userService.save(userDto));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@PathVariable ("id") String id) {
-        usersService.findById(id).orElseThrow(()-> new UserNotFoundException(id));
-        usersService.deleteById(id);
-        return ResponseEntity.ok().build();
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@RequestBody UserDto userDto, @PathVariable String id)
+    {
+        return ResponseEntity.ok(userService.update(userDto, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> delete( @PathVariable String id)
+    {
+        return ResponseEntity.ok(userService.deleteById(id));
     }
 }
