@@ -4,14 +4,11 @@ package edu.escuelaing.ieti.controller.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import edu.escuelaing.ieti.exception.UserNotFoundException;
-import edu.escuelaing.ieti.repository.user.User;
-import edu.escuelaing.ieti.repository.user.UserDto;
+import edu.escuelaing.ieti.data.User;
+import edu.escuelaing.ieti.dto.UserDto;
 import edu.escuelaing.ieti.service.user.UsersService;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController

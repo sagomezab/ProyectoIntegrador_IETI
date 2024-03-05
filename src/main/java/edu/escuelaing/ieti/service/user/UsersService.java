@@ -2,8 +2,8 @@ package edu.escuelaing.ieti.service.user;
 
 import java.util.List;
 
-import edu.escuelaing.ieti.repository.user.User;
-import edu.escuelaing.ieti.repository.user.UserDto;
+import edu.escuelaing.ieti.data.User;
+import edu.escuelaing.ieti.dto.UserDto;
 
 public interface UsersService {
 
@@ -16,4 +16,6 @@ public interface UsersService {
     boolean deleteById(String id);
 
     User update(UserDto userDto, String userId);
+
+    User findByEmail(String email);
 }

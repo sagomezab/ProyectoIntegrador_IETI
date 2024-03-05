@@ -1,7 +1,7 @@
 package edu.escuelaing.ieti.service.user;
 
-import edu.escuelaing.ieti.repository.user.User;
-import edu.escuelaing.ieti.repository.user.UserDto;
+import edu.escuelaing.ieti.data.User;
+import edu.escuelaing.ieti.dto.UserDto;
 import edu.escuelaing.ieti.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +61,11 @@ public class UserServiceMongoDB implements UsersService{
             return user;
         }
         return null;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
 }
